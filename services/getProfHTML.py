@@ -2,7 +2,6 @@ from urllib.request import urlopen
 from bs4 import BeautifulSoup
 from webscrap.DataScraper import parse_url
 
-
 def professorURL(name):
     firstName = name.partition(' ')[0]
     lastName = name.partition(' ')[2]

@@ -9,9 +9,11 @@ import time
 import re
 import query_RMP
 from slackclient import SlackClient
+from services.getProfHTML import *
+#from services.gameify_prof import *
 
 # instantiate Slack client
-slack_token = 'xoxb-535205496215-534355130885-NXgj2IqsGIEhanXPebaxjC1l'
+slack_token = ''
 sc = SlackClient(slack_token)
 # starterbot's user ID in Slack
 starterbot_id = None
@@ -35,6 +37,7 @@ if sc.rtm_connect():
                     # Check if input matches format $profinfo{.*}
                     if (re.match("^\$profinfo\{.*\}$", event['text'])):
                         prof_name =  event['text'][10:-1]
+                        professorURL(prof_name)
                     # Check if channel is #slack-prof-stats-bot
                     if (event['channel'][0] == 'D'|'C'): #CFR61EQPR
                         sc.api_call(
