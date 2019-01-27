@@ -31,11 +31,11 @@ def analyze_text(query_type: str, input_texts: [str], api_key: str = AZURE_TEXT_
     response = r.json()
     pprint(response)
 
-"""
+
 def slack_prof_query(first_name, last_name) -> models.Prof:
     """
     #Given a professor's name, query for professor 
-"""
+    """
     session = get_db_session()
     query = query_prof(session, first_name, last_name)
     if query is None:
@@ -49,7 +49,7 @@ def slack_prof_query(first_name, last_name) -> models.Prof:
 
     else: 
         return query
-"""
+
 
 def gameify_prof(prof: models.Prof):
     response = \
@@ -59,10 +59,18 @@ def gameify_prof(prof: models.Prof):
                     - Rating: {prof.rating}\n\
                     - Average Passing: {prof.average_passing}%\n\
                     - Take again: {prof.take_again}%\n'
-    print(response)
-session = get_db_session()
-prof = models.Prof(url='google.com',first_name='Jeff',last_name='Doug',rating='7.9',average_passing='96',take_again='57')
-gameify_prof(prof)
+    return response
+
+def slackbot_query_print(prof_name):
+    firstName = prof_name.partition(' ')[0]
+    lastName = prof_name.partition(' ')[2]
+    prof = slack_prof_query(first_name,last_name)
+    text = gameify_prof(prof)
+    return text
+
+#session = get_db_session()
+#rof = models.Prof(url='google.com',first_name='Jeff',last_name='Doug',rating='7.9',average_passing='96',take_again='57')
+#gameify_prof(prof)
 
 
 
