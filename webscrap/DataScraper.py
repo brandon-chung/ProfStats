@@ -46,7 +46,7 @@ def get_percentage(soup):
 
 # Gets the tags for professor-> [(tag, value)]
 def get_tags(soup):
-    container = soup.find('div', class_="tag-box")
+    container = soup.find('div', class_='tag-box')
     lines = str(container).split('\n')
     aList = []
     for line in lines:
@@ -57,10 +57,20 @@ def get_tags(soup):
             aList.append((tag, tag_value))
     return aList
 
-def make_prof():
+def get_reviews(soup):
+    lines = soup.find_all('p', class_='commentsParagraph')
+    aList = []
+    for line in lines:
+        aList.append(' '.join(line.get_text().split()))
+    return aList
+
+def make_prof(url):
     """
     Queries for a prof and returns a Prof object with the relevant metadata
     """
-    prof = Prof("", "name", "last name")
+    soup = parse_url(url)
+    first_name, last_name = get_name(soup)
+
+    prof = Prof(url, first_name, last_name)
 
     return prof
