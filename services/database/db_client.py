@@ -15,19 +15,19 @@ def get_db_session():
     """
     Returns database connection session.
     """
-    
-    #TODO
+    session = sessionmaker(bind=engine)
+    return session
 
 def init_db():
     """
     Initializes databases and tables.
     """
     models.Base.metadata.create_all(engine)
-    #TODO
+    
 
 def drop_db():
     """
     Drops the database (Clears it)
     """
     models.Base.metadata.drop_all(engine)
-    #TODO
+    
