@@ -57,6 +57,7 @@ def get_tags(soup):
             aList.append((tag, tag_value))
     return aList
 
+# Gets all the comments from every review-> []
 def get_reviews(soup):
     lines = soup.find_all('p', class_='commentsParagraph')
     aList = []
@@ -64,6 +65,7 @@ def get_reviews(soup):
         aList.append(' '.join(line.get_text().split()))
     return aList
 
+# Gets the average and the passing rate from slacknotes-> average(float), rate(float)
 def get_average_and_pass(first, last):
     url = 'https://slacknotes.com/professors?first_name=' + first.lower() + '&last_name=' + last.lower()
     '''
