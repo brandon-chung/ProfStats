@@ -1,6 +1,7 @@
 from urllib.request import urlopen
 from bs4 import BeautifulSoup
 from webscrap.DataScraper import parse_url, get_courses, get_reviews, get_tags, get_percentage, get_name, get_rating
+from services.historicalGradeAverage import averagePassing
 
 def professorURL(name):
     firstName = name.partition(' ')[0]
@@ -25,9 +26,10 @@ def professorURL(name):
         profPercentage = get_percentage(newSoup)
         profTags = get_tags(newSoup)
         profReviews = get_reviews(newSoup)
-        print(firstName)
-        print(lastName)
-        profInfo = [profName, profCourses, profRating, profPercentage, profTags, profReviews]
+        avPass = averagePassing(firstName, lastName)
+        historicalAverage = avPass[0]
+        passing = avPass[1]
+        profInfo = [profName, historicalAverage, passing, profCourses, profRating, profPercentage, profTags, profReviews]
         return(profInfo)
 
     except:
