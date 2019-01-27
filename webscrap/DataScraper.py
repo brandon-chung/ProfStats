@@ -24,7 +24,7 @@ def get_courses(soup):
     for line in result:
         if "name" in str(line):
             course_name = line.find('span', class_='response')
-            if (course_name != None) and (course_name not in aList):
+            if (course_name != None) and (course_name.get_text() not in aList):
                 aList.append(course_name.get_text())
     return aList
 
@@ -66,16 +66,6 @@ def get_reviews(soup):
         aList.append(' '.join(line.get_text().split()))
     return aList
 
-# Gets the average and the passing rate from slacknotes-> average(float), rate(float)
-def get_average_and_pass(first, last):
-    url = 'https://slacknotes.com/professors?first_name=' + first.lower() + '&last_name=' + last.lower()
-    '''
-    soup = parse_url(url) 
-    lines = soup.find('h2')
-    print(url)
-    print(soup)
-    '''
-
 def make_prof(url):
     """
     Queries for a prof and returns a Prof object with the relevant metadata
@@ -87,4 +77,5 @@ def make_prof(url):
 
     return prof
 
-get_average_and_pass('gregor', 'kiczales') # remove later
+url = "https://www.ratemyprofessors.com/ShowRatings.jsp?tid=2348179"
+print(get_courses(parse_url(url)))
