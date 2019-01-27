@@ -1,80 +1,64 @@
 """
 Slack bot. Given a specific command, responds with gameified professor information
 Reference: https://www.fullstackpython.com/blog/build-first-slack-bot-python.html
+           https://github.com/slackapi/python-slack-events-api/blob/master/example/example.py
+           https://github.com/bchung00/Social-Growth-Bot/blob/master/bot.py
 """
 import os
 import time
 import re
+import query_RMP
 from slackclient import SlackClient
 
 # instantiate Slack client
 slack_token = 'xoxb-535205496215-534355130885-NXgj2IqsGIEhanXPebaxjC1l'
-slack_client = SlackClient(slack_token)
+sc = SlackClient(slack_token)
 # starterbot's user ID in Slack
 starterbot_id = None
 
-slack_client.api_call(
-    "chat.postMessage",
-    channel="CFR61EQPR",
-    text="Hello from Python :tada:"
-)
+# If connected...
+if sc.rtm_connect():
+    print('Connected...')
 
-# constants
-RTM_READ_DELAY = 1 # 1 second delay between reading from RTM
-EXAMPLE_COMMAND = "do"
-MENTION_REGEX = "^<@(|[WU].+?)>(.*)"
+# Response to error
+def error_handler(err):
+    print("ERROR: " + str(err))
 
-def parse_bot_commands(slack_events):
-    """
-        Parses a list of events coming from the Slack RTM API to find bot commands.
-        If a bot command is found, this function returns a tuple of command and channel.
-        If its not found, then this function returns None, None.
-    """
-    for event in slack_events:
-        if event["type"] == "message" and not "subtype" in event:
-            user_id, message = parse_direct_mention(event["text"])
-            if user_id == starterbot_id:
-                return message, event["channel"]
-    return None, None
+if sc.rtm_connect():
+    while True:
+        events = sc.rtm_read()
+        print(events)
+        for event in events:
+            if ('type' in event and event['type'] == 'message'):
+                print(event)
+                try:
+                    # Check if input matches format $profinfo{.*}
+                    if (re.match("^\$profinfo\{.*\}$", event['text'])):
+                        prof_name =  event['text'][10:-1]
+                    # Check if channel is #slack-prof-stats-bot
+                    if (event['channel'][0] == 'D'|'C'): #CFR61EQPR
+                        sc.api_call(
+                            "chat.postMessage",
+                            channel= event['channel'],
+                            text= prof_name,  #To be changed
+                            user= event['user']
+                            )
+                    else:
+                        sc.rtm_send_message(event['channel'], msg)
+                except: 
+                    pass
+        time.sleep(1)
+else:
+    print ("Connection Failed")
 
-def parse_direct_mention(message_text):
-    """
-        Finds a direct mention (a mention that is at the beginning) in message text
-        and returns the user ID which was mentioned. If there is no direct mention, returns None
-    """
-    matches = re.search(MENTION_REGEX, message_text)
-    # the frist group contains the username, the second group contains the remaining message
-    return (matches.group(1), matches.group(2).strip()) if matches else (None, None)
-
-def handle_command(command, channel):
-    """
-        Executes bot command if the command is known
-    """
-    # Default response is to help text for the user
-    default_response = "Not sure what you mean. Try *{}*.".format(EXAMPLE_COMMAND)
-
-    # Finds and executes the given command, filling in response
-    response = None
-    # This is where you start to implement more commands!
-    if command.startswith(EXAMPLE_COMMAND):
-        response = "Sure... write some more code then I can do that!"
-
-    # Sends the response back to the channel
-    slack_client.api_call(
-        "chat.postMessage",
-        channel=channel,
-        text=response or default_response
-    )
-
-if __name__ == "__main__":
-    if slack_client.rtm_connect(with_team_state=False):
-        print("Starter Bot connected and running!")
-        # Read bot's user ID by calling Web API method `auth.test`
-        starterbot_id = slack_client.api_call("auth.test")["user_id"]
-        while True:
-            command, channel = parse_bot_commands(slack_client.rtm_read())
-            if command:
-                handle_command(command, channel)
-            time.sleep(RTM_READ_DELAY)
-    else:
-        print("Connection failed. Exception traceback printed above.")
+# def dummy():
+#     if input == ______:
+#         result = query_RMP
+#         if input is in result:
+#             return "input was found in query_RMP"
+#         else: 
+#             new_result = query_RMP
+#             if input is in new_result:
+#                 return "something else..."
+#             else:
+#                 return "No professor found."
