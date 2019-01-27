@@ -66,10 +66,12 @@ def get_reviews(soup):
 
 def get_average_and_pass(first, last):
     url = 'https://slacknotes.com/professors?first_name=' + first.lower() + '&last_name=' + last.lower()
-    soup = parse_url(url)
+    '''
+    soup = parse_url(url) 
     lines = soup.find('h2')
     print(url)
     print(soup)
+    '''
 
 def make_prof(url):
     """
@@ -82,4 +84,4 @@ def make_prof(url):
 
     return prof
 
-get_average_and_pass('gregor', 'kiczales')
+get_average_and_pass('gregor', 'kiczales') # remove later
