@@ -26,26 +26,27 @@ if sc.rtm_connect():
 def error_handler(err):
     print("ERROR: " + str(err))
 
+def print_to_slackbot():
+        sc.api_call(
+        "chat.postMessage",
+        channel= event['channel'],
+        text= prof_name,  #To be changed
+        user= event['user']
+        )
+
 if sc.rtm_connect():
     while True:
         events = sc.rtm_read()
         print(events)
         for event in events:
-            if ('type' in event and event['type'] == 'message'):
+            # Check if new message and channel is #slack-prof-stats-bot
+            if ('type' in event and event['type'] == 'message' and event['channel'][0] == 'D'):
                 print(event)
                 try:
                     # Check if input matches format $profinfo{.*}
                     if (re.match("^\$profinfo\{.*\}$", event['text'])):
                         prof_name =  event['text'][10:-1]
                         professorURL(prof_name)
-                    # Check if channel is #slack-prof-stats-bot
-                    if (event['channel'][0] == 'D'|'C'): #CFR61EQPR
-                        sc.api_call(
-                            "chat.postMessage",
-                            channel= event['channel'],
-                            text= prof_name,  #To be changed
-                            user= event['user']
-                            )
                     else:
                         sc.rtm_send_message(event['channel'], msg)
                 except: 
@@ -53,15 +54,3 @@ if sc.rtm_connect():
         time.sleep(1)
 else:
     print ("Connection Failed")
-
-# def dummy():
-#     if input == ______:
-#         result = query_RMP
-#         if input is in result:
-#             return "input was found in query_RMP"
-#         else: 
-#             new_result = query_RMP
-#             if input is in new_result:
-#                 return "something else..."
-#             else:
-#                 return "No professor found."
