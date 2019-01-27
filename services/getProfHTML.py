@@ -2,6 +2,7 @@ from urllib.request import urlopen
 from bs4 import BeautifulSoup
 from services.DataScraper import parse_url, get_courses, get_reviews, get_tags, get_percentage, get_name, get_rating
 from services.historicalGradeAverage import averagePassing
+from services.visualizer.visualizer import generateImage
 
 def professorURL(name):
     firstName = name.partition(' ')[0]

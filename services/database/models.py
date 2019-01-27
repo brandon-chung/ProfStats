@@ -23,11 +23,20 @@ class Prof(Base):
     url = Column(String(100))
     first_name = Column(String(64))
     last_name = Column(String(64))
+    rating = Column(String(64))
+    average_passing = Column(String(64))
+    take_again = Column(String(64))
     # Attributes
     # Follow template:
     # {Attribute_name} = Column(String({0<n<256}))
 
-
+    def __init__(self, url, first_name, last_name, rating, average_passing, take_again):
+        self.prof_id = generate_uuid
+        self.first_name = first_name
+        self.last_name = last_name
+        self.rating = rating
+        self.average_passing = average_passing
+        self.take_again = take_again
 
 
 
