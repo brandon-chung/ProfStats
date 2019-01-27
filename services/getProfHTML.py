@@ -2,6 +2,7 @@ from urllib.request import urlopen
 from bs4 import BeautifulSoup
 from webscrap.DataScraper import parse_url, get_courses, get_reviews, get_tags, get_percentage, get_name, get_rating
 from services.historicalGradeAverage import averagePassing
+from services.visualizer.visualizer import generateImage
 
 def professorURL(name):
     firstName = name.partition(' ')[0]
@@ -30,6 +31,10 @@ def professorURL(name):
         historicalAverage = avPass[0]
         passing = avPass[1]
         profInfo = [profName, historicalAverage, passing, profCourses, profRating, profPercentage, profTags, profReviews]
+        #generateImg(profName, profCourses, profRating, profPercentage, historicalAverage, passing)
+        print("GENERATE IMAGE")
+        #generateImage("Cinda Heeren", "CPSC 213, CPSC 221", "4.5", "0", "80%", "90%")
+        print("END GENERATION")
         return(profInfo)
 
     except:
