@@ -56,3 +56,10 @@ def get_tags(soup):
             aList.append((tag, tag_value))
     return aList
 
+def make_prof():
+    """
+    Queries for a prof and returns a Prof object with the relevant metadata
+    """
+    prof = None
+
+    return prof

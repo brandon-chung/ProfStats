@@ -31,3 +31,18 @@ def drop_db():
     """
     models.Base.metadata.drop_all(engine)
     
+def insert_item(session, item):
+    """
+    Given a session and item (an object of one of the classes in models), insert it into database
+    """
+
+    session.add(item)
+    session.commit()
+
+def query_prof(session, first_name, last_name) -> models.Prof:
+    """
+    Queries a professor based on name, then returns their ProfStat
+    """
+    prof = session.query(models.Prof).\
+            filter(models.Prof.first_name == first_name, models.Prof.last_name == last_name).one_or_none()
+    return prof
