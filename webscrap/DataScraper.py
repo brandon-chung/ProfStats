@@ -4,6 +4,7 @@ from bs4 import BeautifulSoup
 def parse_url(url):
     html_page = urlopen(url)
     soup = BeautifulSoup(html_page, 'html.parser')
+    return soup
 
 # Gets name of professor-> string, string
 def get_name(soup):
@@ -42,5 +43,15 @@ def get_percentage(soup):
         take_again = find_take_again.get_text().strip()
     return take_again
 
-
+def get_tags(soup):
+    container = soup.find('div', class_="tag-box")
+    lines = str(container).split('\n')
+    aList = []
+    for line in lines:
+        focused_line = (line.partition('<span class="tag-box-choosetags"> ')[2]).partition(' <b>')
+        tag = focused_line[0].capitalize()
+        tag_value = focused_line[2].partition('</b>')[0].strip('()')
+        if tag != '' and tag != None:
+            aList.append((tag, tag_value))
+    return aList
 
