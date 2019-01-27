@@ -17,8 +17,11 @@ def get_name(soup):
     last_name = find_last_name.get_text().strip()
     return first_name, last_name
 
-# Gets every course a person has taken-> array
-def get_courses(soup):
+
+def get_courses(soup) -> []:
+    """
+    Gets every course a person has taken
+    """
     aList = []
     result = soup.findAll('span')
     for line in result:
