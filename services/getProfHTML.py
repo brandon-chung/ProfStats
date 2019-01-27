@@ -17,3 +17,4 @@ def professorURL(firstName, lastName):
         return(output)
     except:
         print("Invalid name or professor could not be found")
+        return ''

@@ -1,5 +1,6 @@
 from urllib.request import urlopen
 from bs4 import BeautifulSoup
+from services.database.models import *
 
 def parse_url(url):
     html_page = urlopen(url)
@@ -60,6 +61,6 @@ def make_prof():
     """
     Queries for a prof and returns a Prof object with the relevant metadata
     """
-    prof = None
+    prof = Prof("", "name", "last name")
 
     return prof
