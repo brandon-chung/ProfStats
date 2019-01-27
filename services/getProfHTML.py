@@ -1,6 +1,6 @@
 from urllib.request import urlopen
 from bs4 import BeautifulSoup
-from webscrap.DataScraper import parse_url
+from webscrap.DataScraper import parse_url, get_courses, get_reviews, get_tags, get_percentage, get_name, get_rating
 
 def professorURL(name):
     firstName = name.partition(' ')[0]
@@ -9,7 +9,6 @@ def professorURL(name):
 
     html_page = urlopen(url_page)
     soup = BeautifulSoup(html_page, 'html.parser')
-
     try:
         professorListing = soup.find('li', attrs={'class': "listing PROFESSOR"})
         accessHTML = str(professorListing.find('a'))
@@ -17,6 +16,19 @@ def professorURL(name):
 
         output = "https://www.ratemyprofessors.com" + link
         print(output)
-        parse_url(output)
+        newSoup = parse_url(output)
+        profName = get_name(newSoup)
+        firstName = profName[0]
+        lastName = profName[1]
+        profCourses = get_courses(newSoup)
+        profRating = get_rating(newSoup)
+        profPercentage = get_percentage(newSoup)
+        profTags = get_tags(newSoup)
+        profReviews = get_reviews(newSoup)
+        print(firstName)
+        print(lastName)
+        profInfo = [profName, profCourses, profRating, profPercentage, profTags, profReviews]
+        return(profInfo)
+
     except:
         print("Invalid name or professor could not be found")

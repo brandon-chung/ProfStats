@@ -7,6 +7,7 @@ def parse_url(url):
     soup = BeautifulSoup(html_page, 'html.parser')
     return soup
 
+
 # Gets name of professor-> string, string
 def get_name(soup):
     find_name = soup.find('h1', class_='profname')
@@ -23,7 +24,7 @@ def get_courses(soup):
     for line in result:
         if "name" in str(line):
             course_name = line.find('span', class_='response')
-            if course_name != None:
+            if (course_name != None) and (course_name not in aList):
                 aList.append(course_name.get_text())
     return aList
 

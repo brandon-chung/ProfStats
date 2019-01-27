@@ -6,6 +6,7 @@ import requests
 from config import (AZURE_TEXT_ANALYTICS_NAME, AZURE_TEXT_ANALYTICS_KEY1, AZURE_TEXT_ANALYTICS_KEY2,
                     AZURE_TEXT_ANALYTICS_URL)
 from pprint import pprint
+from services.slack_bot import *
 from services.database import models
 headers   = {"Ocp-Apim-Subscription-Key": AZURE_TEXT_ANALYTICS_KEY2}
 
@@ -26,10 +27,14 @@ def analyze_text(query_type: str, input_texts: [str], api_key: str = AZURE_TEXT_
     response = r.json()
     pprint(response)
 
-def gameify_prof(prof: models.Prof) -> str:
+'''def gameify_prof(prof: models.Prof) -> str:
     """
     Given a prof, return a string to send to slack.
     """
+'''
+
+def gameify_prof(profname):
+    print_to_slackbot(profname)
 
 
 # analyze_text('entities', ['HEY WHAT UP. How are you doing. Dogs are great', 'Hi. My name is Jeff.', 'Bonjour'])

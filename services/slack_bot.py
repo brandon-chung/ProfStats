@@ -4,16 +4,13 @@ Reference: https://www.fullstackpython.com/blog/build-first-slack-bot-python.htm
            https://github.com/slackapi/python-slack-events-api/blob/master/example/example.py
            https://github.com/bchung00/Social-Growth-Bot/blob/master/bot.py
 """
-import os
 import time
 import re
-import query_RMP
 from slackclient import SlackClient
-from services.getProfHTML import *
-#from services.gameify_prof import *
+from services.getProfHTML import professorURL
 
 # instantiate Slack client
-slack_token = ''
+slack_token = 'xoxb-535205496215-534355130885-3OtIVS1GSCk6ie0nGbVCl9bR'
 sc = SlackClient(slack_token)
 # starterbot's user ID in Slack
 starterbot_id = None
@@ -26,13 +23,13 @@ if sc.rtm_connect():
 def error_handler(err):
     print("ERROR: " + str(err))
 
-def print_to_slackbot():
-        sc.api_call(
-        "chat.postMessage",
-        channel= event['channel'],
-        text= prof_name,  #To be changed
-        user= event['user']
-        )
+def print_to_slackbot(input):
+    sc.api_call(
+    "chat.postMessage",
+    channel= event['channel'],
+    text= str(input),  #To be changed
+    user= event['user']
+    )
 
 if sc.rtm_connect():
     while True:
@@ -45,11 +42,14 @@ if sc.rtm_connect():
                 try:
                     # Check if input matches format $profinfo{.*}
                     if (re.match("^\$profinfo\{.*\}$", event['text'])):
-                        prof_name =  event['text'][10:-1]
-                        professorURL(prof_name)
+                        prof_name = event['text'][10:-1]
+                        print_to_slackbot(professorURL(prof_name))
                     else:
                         sc.rtm_send_message(event['channel'], msg)
-                except: 
+                        print("forloop else")
+                except Exception as e:
+                    print(e)
+                    print("forloop except")
                     pass
         time.sleep(1)
 else:
