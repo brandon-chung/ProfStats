@@ -11,7 +11,7 @@ from slackclient import SlackClient
 from services.getProfHTML import professorURL
 
 # instantiate Slack client
-slack_token = 'xoxb-535205496215-534355130885-jruRa9Wmhrrx9mELeMyWpKZQ' # enter access ID
+slack_token = 'xoxb-535205496215-534355130885-QdfwMUl5FPodfJEWah9Byuti' # enter access ID
 sc = SlackClient(slack_token)
 # starterbot's user ID in Slack
 starterbot_id = None

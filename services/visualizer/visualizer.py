@@ -73,3 +73,5 @@ def generateImage(profName, courses, rating, approval, average, passing):
     draw.text((x + 270, y+78), passing, fill=color, font=smallFont)
 
     image.save('profStats.png')
+
+generateImage("Gregor Kiczales", "CPSC 110", '3.2', '82', '80%', "94%")
