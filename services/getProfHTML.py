@@ -35,7 +35,7 @@ def professorURL(name):
             'take_again': profPercentage, 'tags':profTags, 'reviews': profReviews}
         # generateImg(profName, profCourses, profRating, profPercentage, historicalAverage, passing)
         print("GENERATE IMAGE")
-        #generateImage("Cinda Heeren", "CPSC 213, CPSC 221", "4.5", "0", "80%", "90%")
+        generateImage("Cinda Heeren", "CPSC 213, CPSC 221", "4.5", "0", "80%", "90%")
         print("END GENERATION")
         return(profInfo)
 
