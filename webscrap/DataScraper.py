@@ -43,6 +43,7 @@ def get_percentage(soup):
         take_again = find_take_again.get_text().strip()
     return take_again
 
+# Gets the tags for professor-> [(tag, value)]
 def get_tags(soup):
     container = soup.find('div', class_="tag-box")
     lines = str(container).split('\n')
