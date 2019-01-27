@@ -33,8 +33,13 @@ def professorURL(name):
         profInfo = {'name':profName, 'first_name': firstName, 'last_name': lastName, 'url': url, 'average': historicalAverage,
             'average_passing':passing,'courses': profCourses, 'rating':profRating,
             'take_again': profPercentage, 'tags':profTags, 'reviews': profReviews}
+        # generateImg(profName, profCourses, profRating, profPercentage, historicalAverage, passing)
+        print("GENERATE IMAGE")
+        #generateImage("Cinda Heeren", "CPSC 213, CPSC 221", "4.5", "0", "80%", "90%")
+        print("END GENERATION")
         return(profInfo)
 
-    except:
+    except Exception as e:
+        print(e)
         print("Invalid name or professor could not be found")
         return None
