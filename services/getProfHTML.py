@@ -1,6 +1,6 @@
 from urllib.request import urlopen
 from bs4 import BeautifulSoup
-from webscrap.DataScraper import parse_url, get_courses, get_reviews, get_tags, get_percentage, get_name, get_rating
+from services.DataScraper import parse_url, get_courses, get_reviews, get_tags, get_percentage, get_name, get_rating
 from services.historicalGradeAverage import averagePassing
 
 def professorURL(name):
@@ -29,8 +29,11 @@ def professorURL(name):
         avPass = averagePassing(firstName, lastName)
         historicalAverage = avPass[0]
         passing = avPass[1]
-        profInfo = [profName, historicalAverage, passing, profCourses, profRating, profPercentage, profTags, profReviews]
+        profInfo = {'name':profName, 'first_name': firstName, 'last_name': lastName, 'url': url, 'average': historicalAverage,
+            'average_passing':passing,'courses': profCourses, 'rating':profRating,
+            'take_again': profPercentage, 'tags':profTags, 'reviews': profReviews}
         return(profInfo)
 
     except:
         print("Invalid name or professor could not be found")
+        return None
