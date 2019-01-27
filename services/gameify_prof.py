@@ -62,8 +62,8 @@ def gameify_prof(prof: models.Prof):
     return response
 
 def slackbot_query_print(prof_name):
-    firstName = prof_name.partition(' ')[0]
-    lastName = prof_name.partition(' ')[2]
+    first_name = prof_name.partition(' ')[0]
+    last_name = prof_name.partition(' ')[2]
     prof = slack_prof_query(first_name,last_name)
     text = gameify_prof(prof)
     return text
