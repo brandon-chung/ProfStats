@@ -12,7 +12,7 @@ from services.getProfHTML import professorURL
 from services import gameify_prof as game
 
 # instantiate Slack client
-slack_token = 'xoxb-535205496215-534355130885-jruRa9Wmhrrx9mELeMyWpKZQ' # enter access ID
+slack_token = 'xoxb-535205496215-534355130885-HshdScxWGdHgAjGUaVIqHlNx' # enter access ID
 sc = SlackClient(slack_token)
 # starterbot's user ID in Slack
 starterbot_id = None
