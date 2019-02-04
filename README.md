@@ -1,2 +1,2 @@
-# NwHacks-2019
-Project repo for NwHacks 2019
+# ProfStats
+A Slack bot porject built during NwHacks 2019.
